@@ -1,0 +1,22 @@
+Bước 1: Khởi tạo kafka server
+.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+.\bin\windows\kafka-server-start.bat .\config\server.properties
+
+Bước 2: Tạo các topic
+.\bin\windows\kafka-topics.bat --create --bootstrap-server localhost:9092 --topic stream-test-input
+.\bin\windows\kafka-topics.bat --create --bootstrap-server localhost:9092 --topic stream-test-output
+
+Bước 3: Chạy kafka stream application
+
+Bước 4: Khởi tạo producer và consumer
+Tạo consumer đọc dữ liệu từ topic stream-test-output
+.\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 `
+--topic stream-test-ouput `
+--from-beginning --formatter kafka.tools.DefaultMessageFormatter `
+--property print.key=true `
+--property print.value=true `
+--property key.deserializer=org.apache.kafka.common.serialization.IntegerDeserializer `
+--property value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+
+Tạo producer và truyền dữ liệu
+cat .\user.csv | .\bin\windows\kafka-console-producer.bat --bootstrap-server localhost:9092 --topic stream-test-input
