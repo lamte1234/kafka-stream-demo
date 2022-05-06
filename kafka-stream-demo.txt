@@ -11,7 +11,7 @@ Bước 3: Chạy kafka stream application
 Bước 4: Khởi tạo producer và consumer
 Tạo consumer đọc dữ liệu từ topic stream-test-output
 .\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 `
---topic stream-test-ouput `
+--topic stream-test-output `
 --from-beginning --formatter kafka.tools.DefaultMessageFormatter `
 --property print.key=true `
 --property print.value=true `
