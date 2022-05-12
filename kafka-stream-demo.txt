@@ -1,14 +1,33 @@
+CÀI ĐẶT:
+Kafka: truy cập https://kafka.apache.org/quickstart và download và giải nén đặt tên folder là kafka
+Code: 
+clone source code và dữ liệu tại https://github.com/lamte1234/kafka-stream-demo
+
+APPLICATION
+
+Dữ liệu về User gồm có (userId, birthday, profileLevel, genderId, createdTime) được truyền vào topic stream-test-input
+Kafka Stream Application đọc dữ liệu từ topic stream-test-input và tranform để lấy được dữ liệu về user gồm có (userId, genderName)
+rồi chuyển vào topic stream-test-output
+
+DEMO APPLICATION
+
+Chuyển file dữ liệu user.csv vào trong folder kafka
+Mở sẵn 4 terminal tại folder kafka
+
 Bước 1: Khởi tạo kafka server
+Tại terminal 1: start zookeeper
 .\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+
+Tại terminal 2: start kafka server
 .\bin\windows\kafka-server-start.bat .\config\server.properties
 
 Bước 2: Tạo các topic
+Tại terminal 3: 
 .\bin\windows\kafka-topics.bat --create --bootstrap-server localhost:9092 --topic stream-test-input
 .\bin\windows\kafka-topics.bat --create --bootstrap-server localhost:9092 --topic stream-test-output
 
-Bước 3: Chạy kafka stream application
-
-Bước 4: Khởi tạo producer và consumer
+Bước 3: Khởi tạo producer và consumer, chạy application
+Tại terminal 4:
 Tạo consumer đọc dữ liệu từ topic stream-test-output
 .\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 `
 --topic stream-test-output `
@@ -18,5 +37,8 @@ Tạo consumer đọc dữ liệu từ topic stream-test-output
 --property key.deserializer=org.apache.kafka.common.serialization.IntegerDeserializer `
 --property value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
 
-Tạo producer và truyền dữ liệu
+Chạy application trong file Test1.java qua IDE
+
+Tại terminal 3:
+Tạo producer và truyền dữ liệu vào topic stream-test-input
 cat .\user.csv | .\bin\windows\kafka-console-producer.bat --bootstrap-server localhost:9092 --topic stream-test-input
